@@ -4,10 +4,11 @@ import pygame
 import objects.image as image
 
 class enemy(image.still):
-    def __init__(self, x, y, width, height, image_to_use, speed, xspeed):
+    def __init__(self, x, y, width, height, image_to_use, speed, xspeed, value):
         super().__init__(x, y, width, height, image_to_use)
         self.speed = speed
         self.xspeed = xspeed
+        self.value = value
     def movedown(self):
         self.rect.y += self.speed
     def moverl(self):
