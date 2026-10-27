@@ -32,6 +32,6 @@ class player(image.still):
         key_input = pygame.key.get_pressed()
         if current_time - self.last_shot >= self.cooldown and key_input[key] == True:
             self.last_shot = current_time
-            return laser.laser(self.rect.centerx,self.rect.y-50,25,50,"assets/images/f-laser.png",5)
+            return laser.laser(self.rect.x+15,self.rect.y-50,25,50,"assets/images/f-laser.png",15)
         
         return None

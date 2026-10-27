@@ -9,6 +9,7 @@ class enemy(image.still):
         self.speed = speed
         self.xspeed = xspeed
         self.value = value
+        self.mask = pygame.mask.from_surface(self.image)
     def movedown(self):
         self.rect.y += self.speed
     def moverl(self):

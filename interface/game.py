@@ -9,17 +9,22 @@ import objects.image
 import objects.grid as grid
 import objects.enemy as enemy
 import objects.lasers as laser
+
+
 def output(window: pygame.Surface):
     #different based on player mode selected in previous screen
-    aliens = [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/player.png", 5, 1) for i in range(7) for j in range(5)]
+    aliens = [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/player.png", 5, 1, 25) for i in range(7) for j in range(5)]
     if manager.playermode == 1:
         player1 = objects.player.player(275, 950, 50, 50, "assets/images/player.png", 3, 3, 1500)
     
     elif manager.playermode == 2:
         player1 = objects.player.player(250, 950, 50, 50, "assets/images/player.png", 3, 3, 3000)
         player2 = objects.player.player(300, 950, 50, 50, "assets/images/player2.png", 3, 3, 3000)
-    
+
+
+
     fired = pygame.sprite.Group()
+    efired = pygame.sprite.Group()
 
     pygame.display.set_caption("menu")
     def display():
@@ -66,7 +71,12 @@ def output(window: pygame.Surface):
             #laser damage
         for i in fired:
             for j in aliens:
-                i.collision(aliens, j)
+                i.collision(aliens, j, j.value)
+        for i in efired:
+            player1.coldamage(i, 1, efired)
+            if manager.playermode == 2:
+                player2.coldamage(i,1,efired)
+        
             #laser damage
             #player collision damage
         for i in aliens:
@@ -87,7 +97,9 @@ def output(window: pygame.Surface):
                 a.xspeed *= -1
                 a.movedown()
         #alien movement
-        
+        #alien laser firing
+
+        #alien laser firing
 
 
 
