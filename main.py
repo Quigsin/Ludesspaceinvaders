@@ -14,6 +14,13 @@ pygame.init()
 
 window = pygame.display.set_mode((manager.WINDOW_WIDTH, manager.WINDOW_HEIGHT), pygame.HWSURFACE)
 
+with open("assets/savedata/singlehigh.txt", "r") as f:
+        cont = f.read().strip()
+        manager.onephigh = int(cont)
+with open("assets/savedata/multihigh.txt", "r") as f:
+        cont = f.read().strip()
+        manager.twophigh = int(cont)
+
 while True:
     if manager.level == 0:
         interface.menu.output(window)

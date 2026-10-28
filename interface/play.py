@@ -1,6 +1,6 @@
 #made by quin smith (ludesdecay)
 #started 2026-10-9
-#finished 2026-//-//
+#finished 2026-10-29
 #space invaders player choice file
 import pygame,sys
 import manager
@@ -10,12 +10,7 @@ import objects.grid as grid
 def output(window: pygame.Surface):
     pygame.display.set_caption("menu")
     font=pygame.font.Font("assets/fonts/PixelifySans-Regular.ttf", 50)
-    with open("assets/savedata/singlehigh.txt", "r") as f:
-        cont = f.read().strip()
-        manager.onephigh = int(cont)
-    with open("assets/savedata/multihigh.txt", "r") as f:
-        cont = f.read().strip()
-        manager.twophigh = int(cont)
+
         
     print(manager.onephigh)
     print(manager.twophigh)
@@ -37,7 +32,7 @@ def output(window: pygame.Surface):
         window.fill((1, 1, 1))
         buttons_group.draw(window)
         window.blit(font.render("Space Invaders", True, (235, 64, 52)), (115, 25))
-        grid.gridHelp(window,manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT)
+        
 
     done = False
     while not done:

@@ -1,6 +1,6 @@
 #made by quin smith (ludesdecay)
 #started 2026-10-9
-#finished 2026-//-//
+#finished 2026-10-29
 #space invaders gameplay file
 import pygame,sys
 import manager
@@ -9,11 +9,14 @@ import objects.image
 import objects.grid as grid
 import objects.enemy as enemy
 import objects.lasers as laser
-
+import objects.label as label
 
 def output(window: pygame.Surface):
     #different based on player mode selected in previous screen
-    aliens = [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/player.png", 5, 1, 25) for i in range(7) for j in range(5)]
+    def spawnenemies():
+
+        return [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/alien.png", 5, 1, 25) for i in range(9) for j in range(7)]
+    aliens = spawnenemies()
     if manager.playermode == 1:
         player1 = objects.player.player(275, 950, 50, 50, "assets/images/player.png", 3, 3, 1500)
     
@@ -22,23 +25,24 @@ def output(window: pygame.Surface):
         player2 = objects.player.player(300, 950, 50, 50, "assets/images/player2.png", 3, 3, 3000)
 
 
-
     fired = pygame.sprite.Group()
     efired = pygame.sprite.Group()
 
-    pygame.display.set_caption("menu")
+    pygame.display.set_caption("score: "+str(manager.currentscore))
     def display():
         window.fill((1,1,1))
         player1.draw(window)
+        
         for i in aliens:
             i.draw(window)
         if manager.playermode == 2:
             player2.draw(window)
-        grid.gridHelp(window,manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT)
+        
         for i in fired:
             i.move()
             i.draw(window)
             i.lifetime()
+        pygame.display.set_caption("score: "+str(manager.currentscore))
 
 
     done = False
@@ -101,6 +105,11 @@ def output(window: pygame.Surface):
 
         #alien laser firing
 
+        #alien respawning
+        if len(aliens) == 0:
+            aliens.extend(spawnenemies())
+        
+        #alien respawning
 
 
 
@@ -110,6 +119,10 @@ def output(window: pygame.Surface):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                done = True
+                manager.level = 3
+
             
         pygame.display.flip()
         manager.fpsClock.tick(manager.fps)
