@@ -21,14 +21,16 @@ def output(window: pygame.Surface):
         40, download_font_name="assets/fonts/PixelifySans-Regular.ttf",
         font_size=28,text_color=(235, 64, 52),  text="co-op highscore: " +str(manager.twophigh))
 
+    lbl_instructions = objects.label.label(90, 80, 500, 500, download_font_name="assets/fonts/PixelifySans-Regular.ttf",
+        font_size=20, text_color=(235,64,52), text="You are the last defender of humanity,\nYou have to fight off as many aliens as possible,\nto save the people below from endless torture.\nthe aliens are endless, but thats okay.\nYou have accepted that you will fight for the rest of your life." )
     
     btn_play = objects.buttons.no_background(
-        250, 100, download_font_name="assets/fonts/PixelifySans-Regular.ttf", font_size=20,
+        260, 400, download_font_name="assets/fonts/PixelifySans-Regular.ttf", font_size=20,
         text_color=(235, 64, 52),
         hover_color=(98, 52, 235),
         text="Play"
         )
-    label_group = pygame.sprite.Group(lbl_highscore1, lbl_highscore2)
+    label_group = pygame.sprite.Group(lbl_highscore1, lbl_highscore2,lbl_instructions)
     buttons_group = pygame.sprite.Group(btn_play)
     def display():
         window.fill((1, 1, 1))

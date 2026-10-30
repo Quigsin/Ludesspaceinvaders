@@ -10,6 +10,7 @@ class laser(image.still):
     def collision(self, other1, other2, other3):
         if self.rect.colliderect(other2):
             self.kill()
+            other2.kill()
             other1.remove(other2)
             manager.currentscore += other3
             
@@ -21,6 +22,6 @@ class laser(image.still):
             return True
         
     def lifetime(self):
-        if self.rect.y < 0:
+        if self.rect.y < 0 or self.rect.y > 1000:
             self.kill()
     

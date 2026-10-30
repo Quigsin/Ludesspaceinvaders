@@ -2,6 +2,7 @@
 #2026-10-14
 import pygame
 import objects.image as image
+import objects.lasers as laser
 
 class enemy(image.still):
     def __init__(self, x, y, width, height, image_to_use, speed, xspeed, value):
@@ -17,3 +18,6 @@ class enemy(image.still):
     def frame(self, image):
         self.image = pygame.image.load(image)
         self.image = pygame.transform.scale(self.image, (self.width, self.height)).convert_alpha()
+    def firing(self):
+        return laser.laser(self.rect.x+15,self.rect.y+50,25,50,"assets/images/e-laser.png",-5)
+    

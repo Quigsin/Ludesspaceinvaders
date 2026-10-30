@@ -21,7 +21,7 @@ def output(window: pygame.Surface):
         text="Singleplayer"
         )
     btn_2p = objects.buttons.no_background(
-        225, 300, download_font_name="assets/fonts/PixelifySans-Regular.ttf", font_size=20,
+        225, 130, download_font_name="assets/fonts/PixelifySans-Regular.ttf", font_size=20,
         text_color=(235, 64, 52),
         hover_color=(98, 52, 235),
         text="Co-op"

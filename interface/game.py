@@ -9,26 +9,35 @@ import objects.image
 import objects.grid as grid
 import objects.enemy as enemy
 import objects.lasers as laser
-import objects.label as label
+import objects.label
+import random
 
 def output(window: pygame.Surface):
     #different based on player mode selected in previous screen
     def spawnenemies():
 
-        return [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/alien.png", 5, 1, 25) for i in range(9) for j in range(7)]
+        return [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/alien.png", 10, 1, 25) for i in range(9) for j in range(7)]
     aliens = spawnenemies()
     if manager.playermode == 1:
-        player1 = objects.player.player(275, 950, 50, 50, "assets/images/player.png", 3, 3, 1500)
+        player1 = objects.player.player(275, 950, 50, 50, "assets/images/player.png", 3, 3, 1200)
     
     elif manager.playermode == 2:
-        player1 = objects.player.player(250, 950, 50, 50, "assets/images/player.png", 3, 3, 3000)
-        player2 = objects.player.player(300, 950, 50, 50, "assets/images/player2.png", 3, 3, 3000)
+        player1 = objects.player.player(250, 950, 50, 50, "assets/images/player.png", 3, 3, 1500)
+        player2 = objects.player.player(300, 950, 50, 50, "assets/images/player2.png", 3, 3, 1500)
 
-
+    lbl_lives = objects.label.label(10, 10, 500,
+            55, download_font_name="assets/fonts/PixelifySans-Regular.ttf", 
+            font_size=25,text_color=(235, 64, 52), text="lives: "+str(player1.lives))
+    
+    lastshot = pygame.time.get_ticks()
+    shotdelay = 2000
+    
     fired = pygame.sprite.Group()
     efired = pygame.sprite.Group()
+    
+    labels = pygame.sprite.Group(lbl_lives)
 
-    pygame.display.set_caption("score: "+str(manager.currentscore))
+    pygame.display.set_caption("score: "+str(manager.currentscore) +"lives: " +str(player1.lives))
     def display():
         window.fill((1,1,1))
         player1.draw(window)
@@ -42,7 +51,13 @@ def output(window: pygame.Surface):
             i.move()
             i.draw(window)
             i.lifetime()
-        pygame.display.set_caption("score: "+str(manager.currentscore))
+        for i in efired:
+            i.move()
+            i.draw(window)
+            i.lifetime()
+        labels.draw(window)
+        
+        pygame.display.set_caption("score: "+str(manager.currentscore) +"| lives: " +str(player1.lives))
 
 
     done = False
@@ -80,7 +95,10 @@ def output(window: pygame.Surface):
             player1.coldamage(i, 1, efired)
             if manager.playermode == 2:
                 player2.coldamage(i,1,efired)
-        
+        for i in fired:
+            for j in efired:
+                i.collision(efired, j, 10)
+            
             #laser damage
             #player collision damage
         for i in aliens:
@@ -88,9 +106,17 @@ def output(window: pygame.Surface):
             if manager.playermode == 2:
                 player2.coldamage(i, 1, aliens)
             #player collision damage
-            
+        #enemy firing
+        ct = pygame.time.get_ticks()
+        if aliens and ct - lastshot >= shotdelay:
+            firer = random.choice(aliens)
+            efired.add(firer.firing())
+            lastshot = ct
+        #enemy firing
+        if manager.playermode == 2:
+            player1.lives= min(player1.lives,player2.lives)
+            player2.lives= min(player1.lives,player2.lives)
         
-                
 
 
         # alien movement
@@ -111,6 +137,14 @@ def output(window: pygame.Surface):
         
         #alien respawning
 
+        if player1.lives == 0:
+            done = True
+            manager.level = 3
+        if manager.playermode == 2 and player2.lives == 0:
+            done = True
+            manager.level = 3
+
+        lbl_lives.set_text("lives: "+ str(player1.lives))
 
 
 
