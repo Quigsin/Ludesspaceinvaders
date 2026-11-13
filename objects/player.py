@@ -23,7 +23,8 @@ class player(image.still):
     def movebacky(self, value):
         self.rect.y = value
     def coldamage(self, other, damage, otherlist):
-        if self.rect.colliderect(other):
+        if pygame.sprite.collide_mask(self, other):
+        #if self.rect.colliderect(other):
             self.lives -= damage
             otherlist.remove(other)
 

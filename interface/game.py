@@ -15,7 +15,7 @@ import random
 def output(window: pygame.Surface):
     #different based on player mode selected in previous screen
     def spawnenemies():
-
+        
         return [enemy.enemy(125+i *50, 0 + j *50, 50, 50, "assets/images/alien.png", 10, 1, 25) for i in range(9) for j in range(7)]
     aliens = spawnenemies()
     if manager.playermode == 1:
@@ -27,7 +27,7 @@ def output(window: pygame.Surface):
 
     lbl_lives = objects.label.label(10, 10, 500,
             55, download_font_name="assets/fonts/PixelifySans-Regular.ttf", 
-            font_size=25,text_color=(235, 64, 52), text="lives: "+str(player1.lives))
+            font_size=25,text_color=(235, 64, 52), text="lives: "+str(player1.lives), show_border=False)
     
     lastshot = pygame.time.get_ticks()
     shotdelay = 2000
@@ -39,7 +39,7 @@ def output(window: pygame.Surface):
 
     pygame.display.set_caption("score: "+str(manager.currentscore) +"lives: " +str(player1.lives))
     def display():
-        window.fill((1,1,1))
+        window.fill((255,255,255))
         player1.draw(window)
         
         for i in aliens:

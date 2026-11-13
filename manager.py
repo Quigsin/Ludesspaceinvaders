@@ -4,7 +4,7 @@
 #space invaders manager file
 import pygame
 
-fps = 30
+fps = 40
 fpsClock = pygame.time.Clock()
 
 level = 0
